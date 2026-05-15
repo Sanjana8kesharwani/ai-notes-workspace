@@ -10,6 +10,7 @@ const {
   deleteNote,
   shareNote,
 getSharedNote,
+archiveNote,
 } = require("../controllers/noteController");
 
 const router = express.Router();
@@ -32,5 +33,8 @@ router.post("/:id/share",protect,shareNote);
   
 
 router.get("/shared/:shareId",getSharedNote);
+
+router.patch("/:id/archive",protect,archiveNote);
+  
   
 module.exports = router;

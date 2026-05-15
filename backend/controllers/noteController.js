@@ -184,6 +184,39 @@ const getSharedNote = async (
   }
 };
 
+// ARCHIVE NOTE
+const archiveNote = async (
+  req,
+  res
+) => {
+  try {
+    const note = await Note.findById(
+      req.params.id
+    );
+
+    if (!note) {
+      return res.status(404).json({
+        message: "Note not found",
+      });
+    }
+
+    note.isArchived =
+      !note.isArchived;
+
+    await note.save();
+
+    res.status(200).json({
+      message: note.isArchived
+        ? "Note archived"
+        : "Note restored",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createNote,
   getNotes,
@@ -192,4 +225,5 @@ getSingleNote,
   deleteNote,
   shareNote,
 getSharedNote,
+archiveNote,
 };
