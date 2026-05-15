@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://ai-notes-workspace-rubh.onrender.com",
+  baseURL:
+    "https://ai-notes-workspace-rubh.onrender.com/api",
 });
 
 export default api;
