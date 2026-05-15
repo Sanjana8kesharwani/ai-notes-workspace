@@ -30,24 +30,15 @@ function Navbar() {
       </div>
 
       <div className="flex items-center gap-4">
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="bg-gray-100 px-5 py-2 rounded-lg hover:bg-gray-200 transition-all"
-        >
+        <button onClick={() => navigate("/dashboard")} className="bg-gray-100 px-5 py-2 rounded-lg hover:bg-gray-200 transition-all">
           Dashboard
         </button>
 
-        <button
-          onClick={() => navigate("/notes")}
-          className="bg-gray-100 px-5 py-2 rounded-lg hover:bg-gray-200 transition-all"
-        >
+        <button onClick={() => navigate("/notes")} className="bg-gray-100 px-5 py-2 rounded-lg hover:bg-gray-200 transition-all">
           Notes
         </button>
 
-        <button
-          onClick={handleLogout}
-          className="bg-black text-white px-5 py-2 rounded-lg hover:opacity-90 transition-all"
-        >
+        <button onClick={handleLogout} className="bg-black text-white px-5 py-2 rounded-lg hover:opacity-90 transition-all">
           Logout
         </button>
       </div>

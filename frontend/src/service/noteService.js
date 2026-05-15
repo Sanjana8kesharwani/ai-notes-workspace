@@ -43,3 +43,47 @@ export const deleteNote = async (id) => {
 
   return response.data;
 };
+
+// UPDATE NOTE
+export const updateNote = async (
+  id,
+  noteData
+) => {
+  const response = await api.put(
+    `/notes/${id}`,
+    noteData,
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+// SHARE NOTE
+export const shareNote = async (id) => {
+  const response = await api.post(
+    `/notes/${id}/share`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+// GET SHARED NOTE
+export const getSharedNote = async (
+  shareId
+) => {
+  const response = await api.get(
+    `/notes/shared/${shareId}`
+  );
+
+  return response.data;
+};

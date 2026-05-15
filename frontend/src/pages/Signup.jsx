@@ -47,34 +47,14 @@ function Signup() {
           Signup
         </h1>
 
-        <form
-          onSubmit={handleSignup}
-          className="flex flex-col gap-4"
-        >
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter name"
-            className="border p-3 rounded-lg outline-none"
-            onChange={handleChange}
-          />
+        <form onSubmit={handleSignup} className="flex flex-col gap-4">
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            className="border p-3 rounded-lg outline-none"
-            onChange={handleChange}
-          />
+          <input type="text" name="name" placeholder="Enter name" className="border p-3 rounded-lg outline-none" onChange={handleChange}/>
+ 
+          <input type="email" name="email" placeholder="Enter email" className="border p-3 rounded-lg outline-none" onChange={handleChange}/>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            className="border p-3 rounded-lg outline-none"
-            onChange={handleChange}
-          />
-
+          <input type="password" name="password" placeholder="Enter password" className="border p-3 rounded-lg outline-none" onChange={handleChange}/>
+          
           <button className="bg-black text-white py-3 rounded-lg hover:opacity-90 transition-all">
             Signup
           </button>

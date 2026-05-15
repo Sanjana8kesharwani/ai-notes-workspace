@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
@@ -19,7 +23,11 @@ function Dashboard() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mt-10">
-            <div className="bg-[#f5f7fb] p-6 rounded-2xl">
+            {/* NOTES CARD */}
+
+            <div onClick={() => navigate("/notes") }
+              className="bg-[#f5f7fb] p-6 rounded-2xl cursor-pointer hover:scale-105 transition-all">
+                
               <h2 className="text-2xl font-bold mb-3">
                 Notes
               </h2>
@@ -29,7 +37,9 @@ function Dashboard() {
               </p>
             </div>
 
-            <div className="bg-[#f5f7fb] p-6 rounded-2xl">
+            {/* AI CARD */}
+
+            <div className="bg-[#f5f7fb] p-6 rounded-2xl hover:scale-105 transition-all">
               <h2 className="text-2xl font-bold mb-3">
                 AI Summary
               </h2>
@@ -39,7 +49,9 @@ function Dashboard() {
               </p>
             </div>
 
-            <div className="bg-[#f5f7fb] p-6 rounded-2xl">
+            {/* SECURITY CARD */}
+
+            <div className="bg-[#f5f7fb] p-6 rounded-2xl hover:scale-105 transition-all">
               <h2 className="text-2xl font-bold mb-3">
                 Secure Access
               </h2>
