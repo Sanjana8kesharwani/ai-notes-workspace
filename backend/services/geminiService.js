@@ -1,15 +1,17 @@
-const generateSummary = async (content) => {
+const generateSummary = async (
+  content
+) => {
   return `
 Summary:
-${content.substring(0, 120)}
+${content.slice(0, 120)}...
 
 Action Items:
-- Review the implementation
-- Complete pending tasks
-- Improve documentation
+• Review the note
+• Complete pending tasks
+• Organize related ideas
 
 Suggested Title:
-AI Generated Smart Notes
+Smart Notes Overview
 `;
 };
 

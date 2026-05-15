@@ -12,29 +12,30 @@ const noteSchema = new mongoose.Schema(
       required: true,
     },
 
-    tags: {
-      type: [String],
-      default: [],
+    summary: {
+      type: String,
+      default: "",
     },
+
+    tags: [
+      {
+        type: String,
+      },
+    ],
 
     category: {
       type: String,
       default: "General",
     },
 
-    archived: {
+    isArchived: {
       type: Boolean,
       default: false,
     },
 
-    summary: {
-      type: String,
-      default: "",
-    },
-
-    actionItems: {
-      type: [String],
-      default: [],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
 
     isPublic: {
@@ -46,18 +47,10 @@ const noteSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const Note = mongoose.model("Note", noteSchema);
-
-module.exports = Note;
+module.exports = mongoose.model("Note", noteSchema);

@@ -1,4 +1,5 @@
 const Note = require("../models/Note");
+const { v4: uuidv4 } = require("uuid");
 
 // CREATE NOTE
 const createNote = async (req, res) => {
@@ -129,10 +130,66 @@ const getSingleNote = async (req, res) => {
   }
 };
 
+
+const shareNote = async (req, res) => {
+  try {
+    const note = await Note.findById(
+      req.params.id
+    );
+
+    if (!note) {
+      return res.status(404).json({
+        message: "Note not found",
+      });
+    }
+
+    note.isPublic = true;
+
+    note.shareId = uuidv4();
+
+    await note.save();
+
+    res.status(200).json({
+      shareLink: `http://localhost:5173/shared/${note.shareId}`,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+
+const getSharedNote = async (
+  req,
+  res
+) => {
+  try {
+    const note = await Note.findOne({
+      shareId: req.params.shareId,
+      isPublic: true,
+    });
+
+    if (!note) {
+      return res.status(404).json({
+        message: "Shared note not found",
+      });
+    }
+
+    res.status(200).json(note);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   createNote,
   getNotes,
 getSingleNote,
   updateNote,
   deleteNote,
+  shareNote,
+getSharedNote,
 };

@@ -8,6 +8,8 @@ const {
     getSingleNote,
   updateNote,
   deleteNote,
+  shareNote,
+getSharedNote,
 } = require("../controllers/noteController");
 
 const router = express.Router();
@@ -26,4 +28,9 @@ router.delete("/:id", protect, deleteNote);
 
 router.get("/:id", protect, getSingleNote);
 
+router.post("/:id/share",protect,shareNote);
+  
+
+router.get("/shared/:shareId",getSharedNote);
+  
 module.exports = router;
