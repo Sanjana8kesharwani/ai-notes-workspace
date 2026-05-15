@@ -87,3 +87,21 @@ export const getSharedNote = async (
 
   return response.data;
 };
+
+
+// ARCHIVE NOTE
+export const archiveNote = async (
+  id
+) => {
+  const response = await api.patch(
+    `/notes/${id}/archive`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    }
+  );
+
+  return response.data;
+};
