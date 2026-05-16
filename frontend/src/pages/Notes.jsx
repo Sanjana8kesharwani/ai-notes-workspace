@@ -37,6 +37,9 @@ function Notes() {
   const [selectedTag, setSelectedTag] =
     useState("");
 
+  const [showArchived, setShowArchived] =
+    useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -292,7 +295,11 @@ function Notes() {
   // FILTER NOTES
 
   const filteredNotes = notes
-    .filter((note) => !note.isArchived)
+    .filter((note) =>
+      showArchived
+        ? note.isArchived
+        : !note.isArchived
+    )
     .filter(
       (note) =>
         note.title
@@ -415,25 +422,55 @@ function Notes() {
           <textarea name="content" placeholder="Enter note content" rows="5" value={formData.content} onChange={handleChange}
             className="bg-[#f8fafc] border border-gray-200 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-black"/>
 
-
           <div className="grid md:grid-cols-2 gap-4">
 
             <input type="text" name="tags" placeholder="Tags separated by commas" value={formData.tags} onChange={handleChange}
               className="bg-[#f8fafc] border border-gray-200 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-black"/>
-
 
             <input type="text" name="category" placeholder="Enter category" value={formData.category} onChange={handleChange}
               className="bg-[#f8fafc] border border-gray-200 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-black"/>
 
           </div>
 
-          <button className="bg-black text-white py-4 rounded-2xl hover:scale-[1.01] transition-all font-semibold shadow-lg">
+          <button className="bg-black text-white py-4 rounded-2xl hover:scale-[1.01] transition-all font-semibold shadow-lg cursor-pointer">
             {editingId
               ? "Update Note"
               : "Create Note"}
           </button>
 
         </form>
+
+        {/* ARCHIVE TOGGLE */}
+
+        <div className="flex items-center gap-4 mb-6">
+
+          <button
+            onClick={() =>
+              setShowArchived(false)
+            }
+            className={`px-5 py-3 rounded-2xl font-semibold transition-all cursor-pointer ${
+              !showArchived
+                ? "bg-black text-white"
+                : "bg-white text-black border"
+            }`}
+          >
+            Active Notes
+          </button>
+
+          <button
+            onClick={() =>
+              setShowArchived(true)
+            }
+            className={`px-5 py-3 rounded-2xl font-semibold transition-all cursor-pointer ${
+              showArchived
+                ? "bg-black text-white"
+                : "bg-white text-black border"
+            }`}
+          >
+            Archived Notes
+          </button>
+
+        </div>
 
         {/* SEARCH + FILTER */}
 
@@ -442,7 +479,6 @@ function Notes() {
           <input type="text" placeholder="Search notes..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
             className="bg-white border border-gray-100 p-5 rounded-2xl shadow-md outline-none focus:ring-2 focus:ring-black"/>
 
-
           <select
             value={selectedTag}
             onChange={(e) =>
@@ -450,7 +486,7 @@ function Notes() {
                 e.target.value
               )
             }
-            className="bg-white border border-gray-100 p-5 rounded-2xl shadow-md outline-none"
+            className="bg-white border border-gray-100 p-5 rounded-2xl shadow-md outline-none cursor-pointer"
           >
 
             <option value="">
@@ -477,7 +513,7 @@ function Notes() {
                 e.target.value
               )
             }
-            className="bg-white border border-gray-100 p-5 rounded-2xl shadow-md outline-none"
+            className="bg-white border border-gray-100 p-5 rounded-2xl shadow-md outline-none cursor-pointer"
           >
 
             <option value="latest">
@@ -545,8 +581,6 @@ function Notes() {
                   {note.content}
                 </p>
 
-                {/* TAGS */}
-
                 <div className="flex flex-wrap gap-2 mb-5">
 
                   {note.tags.map(
@@ -594,7 +628,7 @@ function Notes() {
                     onClick={() =>
                       handleEdit(note)
                     }
-                    className="bg-blue-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium"
+                    className="bg-blue-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium cursor-pointer"
                   >
                     Edit
                   </button>
@@ -603,7 +637,7 @@ function Notes() {
                     onClick={() =>
                       handleDelete(note._id)
                     }
-                    className="bg-red-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium"
+                    className="bg-red-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium cursor-pointer"
                   >
                     Delete
                   </button>
@@ -614,7 +648,7 @@ function Notes() {
                         note._id
                       )
                     }
-                    className="bg-black text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium"
+                    className="bg-black text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium cursor-pointer"
                   >
                     AI Summary
                   </button>
@@ -623,7 +657,7 @@ function Notes() {
                     onClick={() =>
                       handleShare(note._id)
                     }
-                    className="bg-green-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium"
+                    className="bg-green-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium cursor-pointer"
                   >
                     Share
                   </button>
@@ -632,9 +666,11 @@ function Notes() {
                     onClick={() =>
                       handleArchive(note._id)
                     }
-                    className="col-span-2 bg-yellow-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium"
+                    className="col-span-2 bg-yellow-500 text-white py-3 rounded-2xl hover:opacity-90 transition-all font-medium cursor-pointer"
                   >
-                    Archive Note
+                    {note.isArchived
+                      ? "Restore Note"
+                      : "Archive Note"}
                   </button>
 
                 </div>
@@ -675,7 +711,7 @@ function Notes() {
                 onClick={() =>
                   setSelectedSummary("")
                 }
-                className="w-12 h-12 rounded-full bg-red-100 text-red-500 text-2xl hover:scale-110 transition-all"
+                className="w-12 h-12 rounded-full bg-red-100 text-red-500 text-2xl hover:scale-110 transition-all cursor-pointer"
               >
                 ✕
               </button>
